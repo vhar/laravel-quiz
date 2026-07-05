@@ -1,0 +1,97 @@
+services:
+  nginx:
+    container_name: ${APP_NAME}-${APP_ENV}-nginx
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    build:
+      context: '.docker/nginx'
+    links:
+      - app
+      - db
+    restart: on-failure
+    ports:
+      - '${NGINX_PORT}:80'
+    volumes:
+      - '.:/var/www/html:ro,delegated'
+      - './.sail/logs/nginx:/var/log/nginx'
+    networks:
+      - quiz
+
+  app: &app
+    container_name: ${APP_NAME}-${APP_ENV}-app
+    build:
+      context: .docker
+      dockerfile: 'php/Dockerfile'
+      args:
+        WWWUSER: '${WWWUSER}'
+        WWWGROUP: '${WWWGROUP}'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    restart: on-failure
+    volumes:
+      - '.:/var/www/html/:delegated'
+      - './.sail/logs/php:/var/log/php'
+    environment:
+      XDEBUG_MODE: debug
+    networks:
+      - quiz
+  queue:
+    <<: *app
+    container_name: ${APP_NAME}-${APP_ENV}-queue
+    command: sudo -u www-data php /var/www/html/artisan queue:work -v --timeout=300 --memory=1024
+    restart: always
+
+  db:
+    image: mariadb:latest
+    hostname: mariadb
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    container_name: ${APP_NAME}-${APP_ENV}-db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - './.quiz:/var/lib/mysql'
+    networks:
+      - quiz
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ${APP_NAME}-${APP_ENV}-phpmyadmin
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=${DB_PORT}
+      - UPLOAD_LIMIT=300M
+    restart: always
+    ports:
+      - ${PMA_PORT}:80
+    links:
+      - db
+    networks:
+      - quiz
+
+  redis:
+    image: redis:latest
+    container_name: ${APP_NAME}-${APP_ENV}-redis
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    restart: on-failure
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - 'quiz-redis:/data'
+    networks:
+      - quiz
+
+networks:
+    quiz:
+        driver: bridge
+
+volumes:
+    quiz-redis:
+        driver: local
