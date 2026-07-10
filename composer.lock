@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53b5d56b3b7e3cbac1713e68c8850f6c",
+    "content-hash": "ee7f4bc0b79aba6e1046096c94fe98ed",
     "packages": [
         {
             "name": "brick/math",
@@ -5862,6 +5862,58 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.4.0"
             },
             "time": "2025-12-02T11:56:42+00:00"
+        },
+        {
+            "name": "vhar/laravel-files",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vhar/laravel-files.git",
+                "reference": "ba211ecdc2af2fe953a5306d5de60505ced89ef0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vhar/laravel-files/zipball/ba211ecdc2af2fe953a5306d5de60505ced89ef0",
+                "reference": "ba211ecdc2af2fe953a5306d5de60505ced89ef0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^11.0 || ^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0",
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vhar\\LaravelFiles\\FileServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vhar\\LaravelFiles\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "vhar",
+                    "email": "vhar@mail.ru"
+                }
+            ],
+            "description": "Associate files with Eloquent models",
+            "support": {
+                "issues": "https://github.com/vhar/laravel-files/issues",
+                "source": "https://github.com/vhar/laravel-files/tree/1.0.0"
+            },
+            "time": "2026-07-06T10:16:40+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
