@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee7f4bc0b79aba6e1046096c94fe98ed",
+    "content-hash": "ba296c79b8587d32a888cca9a83fb4dd",
     "packages": [
         {
             "name": "brick/math",
@@ -5916,6 +5916,70 @@
             "time": "2026-07-06T10:16:40+00:00"
         },
         {
+            "name": "vhar/laravel-videos",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vhar/laravel-videos.git",
+                "reference": "e31a71787df19a9a66c554dfb0942d81d5105917"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vhar/laravel-videos/zipball/e31a71787df19a9a66c554dfb0942d81d5105917",
+                "reference": "e31a71787df19a9a66c554dfb0942d81d5105917",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^11.0 || ^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0 || ^10.0",
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vhar\\LaravelVideos\\VideoServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vhar\\LaravelVideos\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "vhar",
+                    "email": "vhar@mail.ru"
+                }
+            ],
+            "description": "Attach videos from popular hosting platforms to Eloquent models",
+            "homepage": "https://github.com/vhar/laravel-videos",
+            "keywords": [
+                "dailymotion",
+                "eloquent",
+                "laravel",
+                "rutube",
+                "video",
+                "videos",
+                "vimeo",
+                "vk",
+                "youtube"
+            ],
+            "support": {
+                "issues": "https://github.com/vhar/laravel-videos/issues",
+                "source": "https://github.com/vhar/laravel-videos"
+            },
+            "time": "2026-07-10T18:09:02+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.3",
             "source": {
@@ -8451,13 +8515,13 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }
