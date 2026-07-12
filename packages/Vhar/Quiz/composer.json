@@ -1,0 +1,30 @@
+{
+    "name": "vhar/quiz",
+    "description": "A Laravel package for creating quizzes, assessments, and diagnostic tests with flexible scoring and result evaluation.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Kharinenkov",
+            "email": "vhar@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Vhar\\Quiz\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0",
+        "vhar/laravel-files": "^1.0",
+        "vhar/laravel-videos": "^1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vhar\\Quiz\\QuizServiceProvider"
+            ]
+        }
+    }
+}
