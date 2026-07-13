@@ -2,7 +2,6 @@
 
 namespace Vhar\Quiz\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,7 +39,10 @@ use Vhar\Quiz\Enums\QuizTypeEnum;
  *
  * @property-read \Illuminate\Contracts\Auth\Authenticatable|null $user
  * @property-read QuizDurationRange|null $durationRange
- * @property-read Collection<int, File> $files
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, QuizQuestion> $questions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, QuizDiagnosticKey> $diagnosticKeys
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, QuizResultLevel> $resultLevels
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, File> $files
  */
 
 class Quiz extends Model
@@ -76,15 +78,21 @@ class Quiz extends Model
     ];
 
     /**
-     * Duration range relation.
+     * Get the duration range assigned to the quiz.
      */
     public function durationRange(): BelongsTo
     {
-        return $this->belongsTo(QuizDurationRange::class, 'quiz_duration_range_id');
+        return $this->belongsTo(
+            QuizDurationRange::class,
+            'quiz_duration_range_id'
+        );
     }
 
+
     /**
-     * Questions relation.
+     * Get the questions belonging to the quiz.
+     *
+     * Questions are ordered by their number.
      */
     public function questions(): HasMany
     {
@@ -92,8 +100,11 @@ class Quiz extends Model
             ->orderBy('number');
     }
 
+
     /**
-     * Diagnostic keys relation.
+     * Get the diagnostic keys associated with the quiz.
+     *
+     * Diagnostic keys are ordered by their sort value.
      */
     public function diagnosticKeys(): HasMany
     {
@@ -101,8 +112,11 @@ class Quiz extends Model
             ->orderBy('sort');
     }
 
+
     /**
-     * Result levels relation.
+     * Get the result levels associated with the quiz.
+     *
+     * Result levels are ordered by minimum value.
      */
     public function resultLevels(): HasMany
     {
@@ -110,10 +124,18 @@ class Quiz extends Model
             ->orderBy('min_value');
     }
 
+
+    /**
+     * Get the user who created the quiz.
+     *
+     * The related user model is resolved from the application's
+     * authentication configuration.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(
-            config('auth.providers.users.model')
+            config('auth.providers.users.model'),
+            'user_id'
         );
     }
 }
