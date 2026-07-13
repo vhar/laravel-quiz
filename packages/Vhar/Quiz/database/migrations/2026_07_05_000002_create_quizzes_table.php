@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->id('id');
 
             $table->string('slug')->unique()->index();
-            $table->unsignedTinyInteger('status');
+            $table->unsignedTinyInteger('status')->default(0);
+            $table->timestamp('published_at')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
 
@@ -33,10 +34,10 @@ return new class extends Migration {
                 ->cascadeOnUpdate();
 
             $table->smallInteger('age_restriction')->default(0);
-            $table->smallInteger('attempt_limit')->default(1);
-            $table->integer('time_limit')->nullable();
+            $table->smallInteger('attempt_limit')->default(0);
+            $table->integer('time_limit')->default(0);
+            $table->boolean('change_answer')->default(false);
             $table->integer('scoring_type')->nullable();
-            $table->boolean('change_answer')->nullable();
             $table->json('quiz_settings')->nullable();
             $table->unsignedInteger('passed')->default(0);
 
