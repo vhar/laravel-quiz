@@ -15,6 +15,6 @@ class QuizDurationRange extends Model
 
     public function quizzes(): HasMany
     {
-        return $this->hasMany(Quiz::class);
+        return $this->hasMany(Quiz::class, 'quiz_duration_range_id');
     }
 }
