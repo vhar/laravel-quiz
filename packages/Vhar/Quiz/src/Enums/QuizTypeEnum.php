@@ -7,7 +7,7 @@ enum QuizTypeEnum: int
     case KNOWLEDGE = 1;
     case DIAGNOSTIC = 2;
 
-    public function readableOptions(): string
+    public function readableOption(): string
     {
         return match ($this) {
             self::KNOWLEDGE => 'Проверка знаний',

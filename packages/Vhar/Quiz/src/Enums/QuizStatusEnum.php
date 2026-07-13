@@ -10,7 +10,7 @@ enum QuizStatusEnum: int
     case NOT_PUBLISHED = 4;
     case FINISHED = 5;
 
-    public function readableOptions(): string
+    public function readableOption(): string
     {
         return match ($this) {
             QuizStatusEnum::DRAFT => 'Черновик',

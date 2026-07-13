@@ -11,7 +11,7 @@ enum QuizAgeRestrictionEnum: int
     case SIXTEEN_PLUS = 16;
     case EIGHTEEN_PLUS = 18;
 
-    public function readableOptions(): string
+    public function readableOption(): string
     {
         return match ($this) {
             self::ZERO_PLUS => '0+',
