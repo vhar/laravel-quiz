@@ -19,11 +19,8 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
 
-            $table->foreignId('user_id')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
+            $table->unsignedBigInteger('user_id')
+                ->nullable();
 
             $table->smallInteger('quiz_type');
 

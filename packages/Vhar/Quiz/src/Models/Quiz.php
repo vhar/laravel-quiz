@@ -2,9 +2,11 @@
 
 namespace Vhar\Quiz\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Vhar\LaravelFiles\Models\File;
 use Vhar\LaravelFiles\Traits\HasFiles;
 use Vhar\LaravelVideos\Traits\HasVideos;
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;
@@ -17,29 +19,28 @@ use Vhar\Quiz\Enums\QuizTypeEnum;
  * Class Quiz
  *
  * @property int $id
- * @property string $slug
- * @property QuizStatusEnum $status
+ * @property int $user_id
  * @property string $title
+ * @property string $slug
  * @property string|null $description
- * @property int|null $user_id
- * @property QuizTypeEnum $quiz_type
+ * @property string $status
+ * @property \Carbon\Carbon|null $published_at
  * @property int|null $quiz_duration_range_id
- * @property QuizAgeRestrictionEnum $age_restriction
- * @property int $attempt_limit
+ * @property string|null $age_restriction
+ * @property int|null $attempt_limit
  * @property int|null $time_limit
- * @property QuizScoringTypeEnum|null $scoring_type
  * @property bool|null $change_answer
- * @property array|null $quiz_settings
- */
-/** 
+ * @property string|null $scoring_type
  * Cached number of completed attempts.
  * Updated when user completes quiz.
+ * @property array|null $quiz_settings
  * @property int $passed
- */
-
-/**
- * @property-read \Illuminate\Database\Eloquent\Collection<int,\Vhar\LaravelFiles\Models\File> $files
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Vhar\LaravelVideos\Models\Video> $videos 
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ *
+ * @property-read \Illuminate\Contracts\Auth\Authenticatable|null $user
+ * @property-read QuizDurationRange|null $durationRange
+ * @property-read Collection<int, File> $files
  */
 
 class Quiz extends Model
@@ -58,8 +59,8 @@ class Quiz extends Model
         'age_restriction',
         'attempt_limit',
         'time_limit',
-        'scoring_type',
         'change_answer',
+        'scoring_type',
         'quiz_settings',
     ];
 
@@ -70,6 +71,8 @@ class Quiz extends Model
         'scoring_type' => QuizScoringTypeEnum::class,
         'change_answer' => 'boolean',
         'quiz_settings' => 'array',
+        'passed' => 'integer',
+        'published_at' => 'datetime',
     ];
 
     /**
@@ -77,7 +80,7 @@ class Quiz extends Model
      */
     public function durationRange(): BelongsTo
     {
-        return $this->belongsTo(QuizDurationRange::class);
+        return $this->belongsTo(QuizDurationRange::class, 'quiz_duration_range_id');
     }
 
     /**
@@ -105,5 +108,12 @@ class Quiz extends Model
     {
         return $this->hasMany(QuizResultLevel::class)
             ->orderBy('min_value');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(
+            config('auth.providers.users.model')
+        );
     }
 }
