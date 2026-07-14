@@ -55,5 +55,41 @@ return [
         'name_attribute' => 'name',
 
     ],
+    /*
+    |--------------------------------------------------------------------------
+    | Fileable models
+    |--------------------------------------------------------------------------
+    |
+    | Mapping between API model aliases and Eloquent models that support
+    | file attachments.
+    |
+    | Aliases are used in API requests instead of exposing full model
+    | class names to clients.
+    |
+    */
+    'fileable_models' => [
+        'quiz' => \Vhar\Quiz\Models\Quiz::class,
+        'question' => \Vhar\Quiz\Models\QuizQuestion::class,
+        'answer' => \Vhar\Quiz\Models\QuizQuestionAnswer::class,
 
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Edit policies mapping
+    |--------------------------------------------------------------------------
+    |
+    | Defines authorization policies used for checking whether the current
+    | user can edit specific application models.
+    |
+    | The model class is used as a key, and the corresponding policy class
+    | is resolved from the container.
+    |
+    | This allows adding new editable entities without changing the
+    | authorization resolver implementation.
+    |
+    */
+    'edit_policies' => [
+        \Vhar\Quiz\Models\Quiz::class => \Vhar\Quiz\Application\Policies\QuizEditPolicy::class,
+    ],
 ];

@@ -5920,16 +5920,16 @@
         },
         {
             "name": "vhar/laravel-files",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vhar/laravel-files.git",
-                "reference": "ba211ecdc2af2fe953a5306d5de60505ced89ef0"
+                "reference": "2859ad38730b380fe2f53ec8ec77f7405259bb4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vhar/laravel-files/zipball/ba211ecdc2af2fe953a5306d5de60505ced89ef0",
-                "reference": "ba211ecdc2af2fe953a5306d5de60505ced89ef0",
+                "url": "https://api.github.com/repos/vhar/laravel-files/zipball/2859ad38730b380fe2f53ec8ec77f7405259bb4f",
+                "reference": "2859ad38730b380fe2f53ec8ec77f7405259bb4f",
                 "shasum": ""
             },
             "require": {
@@ -5966,9 +5966,9 @@
             "description": "Associate files with Eloquent models",
             "support": {
                 "issues": "https://github.com/vhar/laravel-files/issues",
-                "source": "https://github.com/vhar/laravel-files/tree/1.0.0"
+                "source": "https://github.com/vhar/laravel-files/tree/1.0.1"
             },
-            "time": "2026-07-06T10:16:40+00:00"
+            "time": "2026-07-14T15:50:00+00:00"
         },
         {
             "name": "vhar/laravel-videos",
