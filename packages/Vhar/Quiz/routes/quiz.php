@@ -8,7 +8,6 @@ use Vhar\Quiz\Http\Api\V1\Quiz\CreateQuizController;
 use Vhar\Quiz\Http\Api\V1\Quiz\GetQuizController;
 use Vhar\Quiz\Http\Api\V1\Quiz\ListQuizzesController;
 use Vhar\Quiz\Http\Api\V1\Quiz\UpdateQuizController;
-use Vhar\Quiz\Http\Api\V1\QuizAnswer\GetQuestionAnswersController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\CreateQuestionController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\DeleteQuestionController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\GetQuizQuestionsController;
