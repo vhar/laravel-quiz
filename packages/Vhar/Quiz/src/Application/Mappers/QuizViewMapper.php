@@ -16,7 +16,9 @@ final readonly class QuizViewMapper
 
     public function fromModel(Quiz $quiz): QuizView
     {
-        $file = $quiz->file();
+        $file = $quiz->relationLoaded('files')
+            ? $quiz->files->first()
+            : $quiz->file();
 
         return new QuizView(
             id: $quiz->id,
