@@ -3,8 +3,8 @@
 namespace Vhar\Quiz\Http\Api\V1\Quiz;
 
 use Illuminate\Http\JsonResponse;
-use Vhar\Quiz\Application\Commands\UpdateQuiz\UpdateQuizCommand;
-use Vhar\Quiz\Application\Commands\UpdateQuiz\UpdateQuizHandler;
+use Vhar\Quiz\Application\Commands\Quiz\UpdateQuiz\UpdateQuizCommand;
+use Vhar\Quiz\Application\Commands\Quiz\UpdateQuiz\UpdateQuizHandler;
 use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
 use Vhar\Quiz\Application\Services\ModelResolver;
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;

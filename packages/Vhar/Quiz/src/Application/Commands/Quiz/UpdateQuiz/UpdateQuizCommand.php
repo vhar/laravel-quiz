@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Commands\UpdateQuiz;
+namespace Vhar\Quiz\Application\Commands\Quiz\UpdateQuiz;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;

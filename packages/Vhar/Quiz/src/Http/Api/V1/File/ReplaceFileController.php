@@ -3,8 +3,8 @@
 namespace Vhar\Quiz\Http\Api\V1\File;
 
 use Illuminate\Http\JsonResponse;
-use Vhar\Quiz\Application\Commands\ReplaceFile\ReplaceFileCommand;
-use Vhar\Quiz\Application\Commands\ReplaceFile\ReplaceFileHandler;
+use Vhar\Quiz\Application\Commands\File\ReplaceFile\ReplaceFileCommand;
+use Vhar\Quiz\Application\Commands\File\ReplaceFile\ReplaceFileHandler;
 use Vhar\Quiz\Application\Mappers\FileDataMapper;
 use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
 use Vhar\Quiz\Application\Services\FileResolver;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Commands\RemoveFile;
+namespace Vhar\Quiz\Application\Commands\File\RemoveFile;
 
 use Illuminate\Database\Eloquent\Model;
 use Vhar\LaravelFiles\Models\File;

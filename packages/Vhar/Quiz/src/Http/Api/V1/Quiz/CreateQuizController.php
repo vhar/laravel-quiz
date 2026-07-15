@@ -2,8 +2,8 @@
 
 namespace Vhar\Quiz\Http\Api\V1\Quiz;
 
-use Vhar\Quiz\Application\Commands\CreateQuiz\CreateQuizCommand;
-use Vhar\Quiz\Application\Commands\CreateQuiz\CreateQuizHandler;
+use Vhar\Quiz\Application\Commands\Quiz\CreateQuiz\CreateQuizCommand;
+use Vhar\Quiz\Application\Commands\Quiz\CreateQuiz\CreateQuizHandler;
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;
 use Vhar\Quiz\Enums\QuizScoringTypeEnum;
 use Vhar\Quiz\Enums\QuizTypeEnum;

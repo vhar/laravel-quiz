@@ -3,8 +3,8 @@
 namespace Vhar\Quiz\Http\Api\V1\Quiz;
 
 use Illuminate\Http\Request;
-use Vhar\Quiz\Application\Queries\GetQuiz\GetQuizHandler;
-use Vhar\Quiz\Application\Queries\GetQuiz\GetQuizQuery;
+use Vhar\Quiz\Application\Queries\Quiz\GetQuiz\GetQuizHandler;
+use Vhar\Quiz\Application\Queries\Quiz\GetQuiz\GetQuizQuery;
 use Vhar\Quiz\Http\Api\V1\Quiz\QuizResource;
 
 final readonly class GetQuizController

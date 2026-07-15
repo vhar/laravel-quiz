@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Commands\AttachFile;
+namespace Vhar\Quiz\Application\Commands\File\AttachFile;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;

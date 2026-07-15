@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Commands\UpdateQuiz;
+namespace Vhar\Quiz\Application\Commands\Quiz\UpdateQuiz;
 
 use Vhar\Quiz\Application\Mappers\QuizViewMapper;
 use Vhar\Quiz\Application\Scopes\QuizEditScope;

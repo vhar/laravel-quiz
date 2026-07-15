@@ -3,8 +3,8 @@
 namespace Vhar\Quiz\Http\Api\V1\File;
 
 use Illuminate\Http\JsonResponse;
-use Vhar\Quiz\Application\Commands\AttachFile\AttachFileCommand;
-use Vhar\Quiz\Application\Commands\AttachFile\AttachFileHandler;
+use Vhar\Quiz\Application\Commands\File\AttachFile\AttachFileCommand;
+use Vhar\Quiz\Application\Commands\File\AttachFile\AttachFileHandler;
 use Vhar\Quiz\Application\Mappers\FileDataMapper;
 use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
 use Vhar\Quiz\Application\Services\ModelResolver;

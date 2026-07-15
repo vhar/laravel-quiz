@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Queries\ListQuizzes;
+namespace Vhar\Quiz\Application\Queries\Quiz\ListQuizzes;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 

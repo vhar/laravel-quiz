@@ -3,7 +3,7 @@
 namespace Vhar\Quiz\Http\Api\V1\Quiz;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Vhar\Quiz\Application\Queries\ListQuizzes\QuizFilters;
+use Vhar\Quiz\Application\Queries\Quiz\ListQuizzes\QuizFilters;
 use Illuminate\Validation\Rules\Enum;
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;
 use Vhar\Quiz\Enums\QuizAvailabilityEnum;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Commands\CreateQuiz;
+namespace Vhar\Quiz\Application\Commands\Quiz\CreateQuiz;
 
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;
 use Vhar\Quiz\Enums\QuizScoringTypeEnum;

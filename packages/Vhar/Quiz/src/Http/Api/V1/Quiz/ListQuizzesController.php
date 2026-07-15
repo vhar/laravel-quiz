@@ -2,9 +2,9 @@
 
 namespace Vhar\Quiz\Http\Api\V1\Quiz;
 
-use Vhar\Quiz\Application\Queries\ListQuizzes\ListQuizzesHandler;
-use Vhar\Quiz\Application\Queries\ListQuizzes\ListQuizzesQuery;
-use Vhar\Quiz\Application\Queries\ListQuizzes\SortParser;
+use Vhar\Quiz\Application\Queries\Quiz\ListQuizzes\ListQuizzesHandler;
+use Vhar\Quiz\Application\Queries\Quiz\ListQuizzes\ListQuizzesQuery;
+use Vhar\Quiz\Application\Queries\Quiz\ListQuizzes\SortParser;
 
 final readonly class ListQuizzesController
 {

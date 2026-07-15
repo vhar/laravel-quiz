@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Commands\ReplaceFile;
+namespace Vhar\Quiz\Application\Commands\File\ReplaceFile;
 
 use Illuminate\Http\UploadedFile;
 use Vhar\LaravelFiles\Models\File;

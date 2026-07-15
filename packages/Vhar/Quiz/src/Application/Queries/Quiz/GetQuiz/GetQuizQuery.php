@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Queries\GetQuiz;
+namespace Vhar\Quiz\Application\Queries\Quiz\GetQuiz;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 final readonly class GetQuizQuery

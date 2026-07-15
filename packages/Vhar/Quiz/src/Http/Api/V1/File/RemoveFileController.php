@@ -4,8 +4,8 @@ namespace Vhar\Quiz\Http\Api\V1\File;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Vhar\Quiz\Application\Commands\RemoveFile\RemoveFileCommand;
-use Vhar\Quiz\Application\Commands\RemoveFile\RemoveFileHandler;
+use Vhar\Quiz\Application\Commands\File\RemoveFile\RemoveFileCommand;
+use Vhar\Quiz\Application\Commands\File\RemoveFile\RemoveFileHandler;
 use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
 use Vhar\Quiz\Application\Services\FileResolver;
 use Vhar\Quiz\Application\Services\ModelResolver;

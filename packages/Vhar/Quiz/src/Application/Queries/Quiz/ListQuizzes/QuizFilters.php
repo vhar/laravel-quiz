@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Queries\ListQuizzes;
+namespace Vhar\Quiz\Application\Queries\Quiz\ListQuizzes;
 
 use Vhar\Quiz\Enums\QuizAgeRestrictionEnum;
 use Vhar\Quiz\Enums\QuizTypeEnum;

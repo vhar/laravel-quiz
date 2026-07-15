@@ -1,6 +1,6 @@
 <?php
 
-namespace Vhar\Quiz\Application\Queries\GetQuiz;
+namespace Vhar\Quiz\Application\Queries\Quiz\GetQuiz;
 
 use Vhar\Quiz\Application\Mappers\QuizViewMapper;
 use Vhar\Quiz\Application\Scopes\QuizVisibility;
