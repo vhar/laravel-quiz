@@ -91,5 +91,6 @@ return [
     */
     'edit_policies' => [
         \Vhar\Quiz\Models\Quiz::class => \Vhar\Quiz\Application\Policies\QuizEditPolicy::class,
+        \Vhar\Quiz\Models\QuizQuestion::class => \Vhar\Quiz\Application\Policies\QuizQuestionEditPolicy::class,
     ],
 ];

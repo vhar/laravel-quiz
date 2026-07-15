@@ -12,12 +12,12 @@ final readonly class GetQuizController
     public function __invoke(
         Request $request,
         GetQuizHandler $handler,
-        string $slug
+        string $quizSlug
     ): QuizResource|\Illuminate\Http\JsonResponse {
         return new QuizResource(
             $handler->handle(
                 new GetQuizQuery(
-                    slug: $slug,
+                    slug: $quizSlug,
                     user: $request->user(),
                 )
             )
