@@ -2,15 +2,15 @@
 
 namespace Vhar\Quiz\Application\Mappers;
 
-use Vhar\Quiz\Models\QuizQuestion;
 use Vhar\Quiz\Application\Views\QuizQuestionView;
 use Vhar\Quiz\Enums\QuizQuestionTypeEnum;
+use Vhar\Quiz\Models\QuizQuestion;
 
 /**
  * Class QuizQuestionViewMapper
  *
  * Maps QuizQuestion Eloquent model into a QuizQuestionView DTO.
- * Handles performance optimizations for loaded collections.
+ * Handles performance optimizations for loaded collections and child relations.
  *
  * @package Vhar\Quiz\Application\Mappers
  */
@@ -22,11 +22,13 @@ final readonly class QuizQuestionViewMapper
      * @param FileDataMapper $fileDataMapper Mapper for file records.
      * @param VideoDataMapper $videoDataMapper Mapper for video records.
      * @param OptionDataMapper $optionDataMapper Mapper for enum/model conversions.
+     * @param QuizAnswerViewMapper $quizAnswerViewMapper Mapper for quiz answer choices.
      */
     public function __construct(
         private FileDataMapper $fileDataMapper,
         private VideoDataMapper $videoDataMapper,
         private OptionDataMapper $optionDataMapper,
+        private QuizAnswerViewMapper $quizAnswerViewMapper,
     ) {
     }
 
@@ -48,6 +50,11 @@ final readonly class QuizQuestionViewMapper
             ? $question->videos->first()
             : $question->video();
 
+        // Safe answers retrieval following the exact same pattern
+        $answers = $question->relationLoaded('answers')
+            ? $question->answers
+            : $question->answers; // Считываем коллекцию ответов через связующее свойство
+
         return new QuizQuestionView(
             id: $question->id,
             quizId: $question->quiz_id,
@@ -62,6 +69,9 @@ final readonly class QuizQuestionViewMapper
             : null,
             video: $video
             ? $this->videoDataMapper->fromModel($video)
+            : null,
+            answers: $answers
+            ? $answers->map(fn($answer) => $this->quizAnswerViewMapper->fromModel($answer))
             : null,
         );
     }

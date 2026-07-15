@@ -9,22 +9,13 @@ use Vhar\Quiz\Application\Views\QuizQuestionView;
 /**
  * Class QuizQuestionResource
  *
- * API resource wrapper for transmitting QuizQuestionView data.
+ * Transforms QuizQuestionView DTO into an API JSON response.
  *
- * @property-read QuizQuestionView $resource
  * @package Vhar\Quiz\Http\Api\V1\QuizQuestion
+ * @mixin QuizQuestionView
  */
 final class QuizQuestionResource extends JsonResource
 {
-    /**
-     * QuizQuestionResource constructor.
-     * * @param QuizQuestionView $resource
-     */
-    public function __construct(QuizQuestionView $resource)
-    {
-        parent::__construct($resource);
-    }
-
     /**
      * Transform the resource into an array.
      *
@@ -43,6 +34,7 @@ final class QuizQuestionResource extends JsonResource
             'score' => $this->score,
             'file' => $this->file,   // Automatically serialized FileData
             'video' => $this->video, // Automatically serialized VideoData
+            'answers' => $this->answers, // Automatically serialized Collection of QuizAnswerView DTOs or null
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Vhar\Quiz\Application\Views;
 
+use Illuminate\Support\Collection;
 use Vhar\Quiz\Application\Data\FileData;
 use Vhar\Quiz\Application\Data\OptionData;
 use Vhar\Quiz\Application\Data\VideoData;
@@ -26,6 +27,7 @@ final readonly class QuizQuestionView
      * @param int $score Points awarded for a correct answer.
      * @param FileData|null $file Single attached image/file metadata.
      * @param VideoData|null $video Single attached external video metadata.
+     * @param Collection $answers Collection of QuizAnswerView DTOs
      */
     public function __construct(
         public int $id,
@@ -36,6 +38,7 @@ final readonly class QuizQuestionView
         public int $score,
         public ?FileData $file = null,
         public ?VideoData $video = null,
+        public ?Collection $answers = null,
     ) {
     }
 }

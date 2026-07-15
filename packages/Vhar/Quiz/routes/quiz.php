@@ -10,6 +10,7 @@ use Vhar\Quiz\Http\Api\V1\Quiz\ListQuizzesController;
 use Vhar\Quiz\Http\Api\V1\Quiz\UpdateQuizController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\CreateQuestionController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\DeleteQuestionController;
+use Vhar\Quiz\Http\Api\V1\QuizQuestion\GetQuizQuestionController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\GetQuizQuestionsController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\UpdateQuestionController;
 
@@ -30,3 +31,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/quizzes', ListQuizzesController::class);
 Route::get('/quizzes/{quizSlug}', GetQuizController::class);
 Route::get('/quizzes/{quizSlug}/questions', GetQuizQuestionsController::class);
+Route::get('/quizzes/{quizSlug}/questions/{questionNumber}', GetQuizQuestionController::class);
