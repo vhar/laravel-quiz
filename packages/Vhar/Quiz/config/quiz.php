@@ -71,7 +71,7 @@ return [
         'quiz' => \Vhar\Quiz\Models\Quiz::class,
         'question' => \Vhar\Quiz\Models\QuizQuestion::class,
         'answer' => \Vhar\Quiz\Models\QuizQuestionAnswer::class,
-
+        'diagnostic_key' => \Vhar\Quiz\Models\QuizDiagnosticKey::class,
     ],
 
     /*
@@ -92,5 +92,6 @@ return [
     'edit_policies' => [
         \Vhar\Quiz\Models\Quiz::class => \Vhar\Quiz\Application\Policies\QuizEditPolicy::class,
         \Vhar\Quiz\Models\QuizQuestion::class => \Vhar\Quiz\Application\Policies\QuizQuestionEditPolicy::class,
+        \Vhar\Quiz\Models\QuizDiagnosticKey::class => \Vhar\Quiz\Application\Policies\QuizDiagnosticKeyEditPolicy::class,
     ],
 ];

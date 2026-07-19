@@ -8,6 +8,9 @@ use Vhar\Quiz\Http\Api\V1\Quiz\CreateQuizController;
 use Vhar\Quiz\Http\Api\V1\Quiz\GetQuizController;
 use Vhar\Quiz\Http\Api\V1\Quiz\ListQuizzesController;
 use Vhar\Quiz\Http\Api\V1\Quiz\UpdateQuizController;
+use Vhar\Quiz\Http\Api\V1\QuizDiagnosticKey\CreateDiagnosticKeyController;
+use Vhar\Quiz\Http\Api\V1\QuizDiagnosticKey\DeleteDiagnosticKeyController;
+use Vhar\Quiz\Http\Api\V1\QuizDiagnosticKey\UpdateDiagnosticKeyController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\CreateQuestionController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\DeleteQuestionController;
 use Vhar\Quiz\Http\Api\V1\QuizQuestion\GetQuizQuestionController;
@@ -22,10 +25,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/quizzes', CreateQuizController::class);
     Route::put('/quizzes/{quizId}', UpdateQuizController::class);
 
+    Route::post('/quizzes/{quizId}/diagnostic-keys', CreateDiagnosticKeyController::class);
+    Route::put('/quizzes/{quizId}/diagnostic-keys/{keyId}', UpdateDiagnosticKeyController::class);
+    Route::delete('/quizzes/{quizId}/diagnostic-keys/{keyId}', DeleteDiagnosticKeyController::class);
+
     Route::post('/quizzes/{quizId}/questions', CreateQuestionController::class);
 
     Route::put('/quizzes/{quizId}/questions/{questionId}', UpdateQuestionController::class);
     Route::delete('/quizzes/{quizId}/questions/{questionId}', DeleteQuestionController::class);
+    /*
+        Route::post('/quizzes/{quizId}/questions/{questionId}/answers', CreateAnswerController::class);
+        Route::put('/quizzes/{quizId}/questions/{questionId}/answers/{answerId}', UpdateAnswerController::class);
+        Route::delete('/quizzes/{quizId}/questions/{questionId}/answers/{answerId}', DeleteAnswerController::class);
+    */
 });
 
 Route::get('/quizzes', ListQuizzesController::class);
