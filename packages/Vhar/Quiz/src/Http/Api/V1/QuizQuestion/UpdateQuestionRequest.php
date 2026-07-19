@@ -3,46 +3,50 @@
 namespace Vhar\Quiz\Http\Api\V1\QuizQuestion;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rule; // Добавили фасад для удобной сборки правил
 use Illuminate\Validation\Rules\Enum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
+use Vhar\Quiz\Application\Services\ModelResolver;
 use Vhar\Quiz\Enums\QuizQuestionTypeEnum;
 use Vhar\Quiz\Models\QuizQuestion;
 
 /**
  * Class UpdateQuestionRequest
  *
- * Handles validation for updating a quiz question payload.
- * Validates aggregate boundaries and route integrity before processing rules.
+ * Handles HTTP validation, scope verification, and authorization criteria for modifying an existing quiz question.
  *
  * @package Vhar\Quiz\Http\Api\V1\QuizQuestion
  */
-final class UpdateQuestionRequest extends FormRequest
+class UpdateQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     * * We use this method to strictly validate that the question belongs 
-     * to the specified quiz before any field validation rules are executed.
      *
+     * Validates that the question belongs to the target quiz scope and that the user possesses modification rights.
+     *
+     * @param ModelResolver $modelResolver Domain entity retriever.
+     * @param EditAuthorizationResolver $authResolver Security policy resolver.
      * @return bool
-     * @throws NotFoundHttpException If the question does not belong to the scoped quiz.
+     *
+     * @throws NotFoundHttpException When the question is not found or does not belong to the specified quiz.
      */
-    public function authorize(): bool
+    public function authorize(ModelResolver $modelResolver, EditAuthorizationResolver $authResolver): bool
     {
-        if ($this->user() === null) {
-            return false;
-        }
-
         $quizId = (int) $this->route('quizId');
         $questionId = (int) $this->route('questionId');
 
-        // Check the actual owner relationship in the database
+        // Fast DB check for ownership context before full hydration
         $actualQuizId = (int) QuizQuestion::where('id', $questionId)->value('quiz_id');
 
-        // If relation is broken or question doesn't exist, throw 404 immediately
         if ($actualQuizId === 0 || $actualQuizId !== $quizId) {
             throw new NotFoundHttpException('Question not found within the specified quiz scope.');
         }
+
+        /** @var QuizQuestion $question */
+        $question = $modelResolver->resolve('question', $questionId);
+
+        $authResolver->authorize($question, $this->user());
 
         return true;
     }
@@ -54,51 +58,23 @@ final class UpdateQuestionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $questionId = $this->route('questionId');
-        $quizId = (int) $this->route('quizId'); // Guaranteed to be correct thanks to authorize()
+        $quizId = (int) $this->route('quizId');
+        $questionId = (int) $this->route('questionId');
 
         return [
+            // Проверяем уникальность пары quiz_id + number, исключая текущий ID вопроса
             'number' => [
                 'required',
                 'integer',
                 'min:1',
-                // Scopes uniqueness strictly within the validated quiz, ignoring current question
                 Rule::unique('quiz_questions', 'number')
                     ->where('quiz_id', $quizId)
-                    ->ignore($questionId),
+                    ->ignore($questionId)
             ],
-            'title' => [
-                'required',
-                'string',
-                'max:65535',
-            ],
-            'type' => [
-                'required',
-                new Enum(QuizQuestionTypeEnum::class),
-            ],
-            'score' => [
-                'nullable',
-                'integer',
-                'min:0',
-            ],
-            'video_url' => [
-                'nullable',
-                'string',
-                'url',
-                'max:2048',
-            ],
-        ];
-    }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'number.unique' => 'A question with this number already exists in this quiz.',
+            'title' => ['required', 'string', 'max:255'],
+            'type' => ['required', new Enum(QuizQuestionTypeEnum::class)],
+            'score' => ['sometimes', 'integer', 'min:0'],
+            'video_url' => ['sometimes', 'nullable', 'url'],
         ];
     }
 }

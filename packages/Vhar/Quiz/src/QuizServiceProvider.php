@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Vhar\Quiz\Application\Policies\EditPolicyRegistry;
-use Vhar\Quiz\Application\Policies\QuizEditPolicy;
-use Vhar\Quiz\Models\Quiz;
 
 class QuizServiceProvider extends ServiceProvider
 {
@@ -25,12 +23,16 @@ class QuizServiceProvider extends ServiceProvider
         $this->app->singleton(
             EditPolicyRegistry::class,
             function ($app) {
-                return new EditPolicyRegistry([
-                    Quiz::class => $app->make(
-                        QuizEditPolicy::class
-                    ),
+                // Получаем карту политик из конфигурационного файла
+                $policyMap = config('quiz.edit_policies', []);
 
-                ]);
+                $instances = [];
+                foreach ($policyMap as $modelClass => $policyClass) {
+                    // Разрешаем инстанс политики через DI-контейнер
+                    $instances[$modelClass] = $app->make($policyClass);
+                }
+
+                return new EditPolicyRegistry($instances);
             }
         );
     }

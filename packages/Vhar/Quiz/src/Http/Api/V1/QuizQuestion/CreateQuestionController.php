@@ -4,10 +4,7 @@ namespace Vhar\Quiz\Http\Api\V1\QuizQuestion;
 
 use Vhar\Quiz\Application\Commands\QuizQuestion\CreateQuestion\CreateQuestionCommand;
 use Vhar\Quiz\Application\Commands\QuizQuestion\CreateQuestion\CreateQuestionHandler;
-use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
-use Vhar\Quiz\Application\Services\ModelResolver;
 use Vhar\Quiz\Enums\QuizQuestionTypeEnum;
-use Vhar\Quiz\Models\Quiz;
 
 /**
  * Class CreateQuestionController
@@ -19,31 +16,27 @@ use Vhar\Quiz\Models\Quiz;
 final readonly class CreateQuestionController
 {
     /**
+     * CreateQuestionController constructor.
+     *
+     * @param CreateQuestionHandler $handler
+     */
+    public function __construct(
+        private CreateQuestionHandler $handler,
+    ) {
+    }
+
+    /**
      * Create a new question for a specific quiz.
      *
-     * @param CreateQuestionRequest $request Request details.
-     * @param CreateQuestionHandler $handler Execution handler.
-     * @param ModelResolver $modelResolver Domain entity retriever.
-     * @param EditAuthorizationResolver $authResolver Security policy resolver.
      * @param int $quizId Unique identifier of the target quiz.
+     * @param CreateQuestionRequest $request Request details.
      *
      * @return QuizQuestionResource
      */
-    public function __invoke(
-        CreateQuestionRequest $request,
-        CreateQuestionHandler $handler,
-        ModelResolver $modelResolver,
-        EditAuthorizationResolver $authResolver,
-        int $quizId
-    ): QuizQuestionResource {
-        /** @var Quiz $quiz */
-        $quiz = $modelResolver->resolve('quiz', $quizId);
-
-        // Authorize the current user to edit the specified quiz, passing the authenticated user
-        $authResolver->authorize($quiz, $request->user());
-
+    public function __invoke(int $quizId, CreateQuestionRequest $request): QuizQuestionResource
+    {
         $command = new CreateQuestionCommand(
-            quizId: $quiz->id,
+            quizId: $quizId,
             number: $request->integer('number'),
             title: $request->string('title')->toString(),
             type: $request->enum('type', QuizQuestionTypeEnum::class),
@@ -51,7 +44,7 @@ final readonly class CreateQuestionController
             videoUrl: $request->filled('video_url') ? $request->string('video_url')->toString() : null
         );
 
-        $questionView = $handler->handle($command);
+        $questionView = $this->handler->handle($command);
 
         return new QuizQuestionResource($questionView);
     }

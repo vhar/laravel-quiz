@@ -3,81 +3,63 @@
 namespace Vhar\Quiz\Http\Api\V1\QuizQuestion;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rule; // Добавили фасад для удобной сборки правил
 use Illuminate\Validation\Rules\Enum;
+use Vhar\Quiz\Application\Services\EditAuthorizationResolver;
+use Vhar\Quiz\Application\Services\ModelResolver;
 use Vhar\Quiz\Enums\QuizQuestionTypeEnum;
+use Vhar\Quiz\Models\Quiz;
 
 /**
  * Class CreateQuestionRequest
  *
- * Handles HTTP payload validation for quiz question creation.
- * Supports inline video attachments.
+ * Handles HTTP validation and authorization criteria for creating a quiz question.
  *
  * @package Vhar\Quiz\Http\Api\V1\QuizQuestion
  */
-final class CreateQuestionRequest extends FormRequest
+class CreateQuestionRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to perform this operation.
+     * Determine if the user is authorized to make this request.
      *
+     * @param ModelResolver $modelResolver
+     * @param EditAuthorizationResolver $authResolver
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize(ModelResolver $modelResolver, EditAuthorizationResolver $authResolver): bool
     {
-        return $this->user() !== null;
+        $quizId = (int) $this->route('quizId');
+
+        /** @var Quiz $quiz */
+        $quiz = $modelResolver->resolve('quiz', $quizId);
+
+        $authResolver->authorize($quiz, $this->user());
+
+        return true;
     }
 
     /**
-     * Rules to validate incoming payloads.
+     * Get the validation rules that apply to the request.
      *
      * @return array<string, array<int, mixed>>
      */
     public function rules(): array
     {
-        $quizId = $this->route('quizId');
+        $quizId = (int) $this->route('quizId');
 
         return [
+            // Проверяем уникальность пары quiz_id + number для создаваемого вопроса
             'number' => [
                 'required',
                 'integer',
                 'min:1',
-                // Unique sequential question numbering strictly scoped to the parent quiz
-                Rule::unique('quiz_questions', 'number')->where(function ($query) use ($quizId) {
-                    return $query->where('quiz_id', $quizId);
-                }),
+                Rule::unique('quiz_questions', 'number')
+                    ->where('quiz_id', $quizId)
             ],
-            'title' => [
-                'required',
-                'string',
-                'max:65535',
-            ],
-            'type' => [
-                'required',
-                new Enum(QuizQuestionTypeEnum::class),
-            ],
-            'score' => [
-                'nullable',
-                'integer',
-                'min:0',
-            ],
-            'video_url' => [
-                'nullable',
-                'string',
-                'url',
-                'max:2048',
-            ],
-        ];
-    }
-
-    /**
-     * Custom validation failure error messages in English.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'number.unique' => 'A question with this number already exists in this quiz.',
+            'title' => ['required', 'string', 'max:255'],
+            'type' => ['required', new Enum(QuizQuestionTypeEnum::class)],
+            'score' => ['sometimes', 'integer', 'min:0'],
+            'video_url' => ['sometimes', 'nullable', 'url'],
         ];
     }
 }
