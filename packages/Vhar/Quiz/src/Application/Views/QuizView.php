@@ -21,7 +21,7 @@ final readonly class QuizView
         public int $attemptLimit,
         public int $timeLimit,
         public bool $changeAnswer,
-        public ?int $scoringType,
+        public ?OptionData $scoringType,
         public ?array $quizSettings,
         public int $passed,
 
