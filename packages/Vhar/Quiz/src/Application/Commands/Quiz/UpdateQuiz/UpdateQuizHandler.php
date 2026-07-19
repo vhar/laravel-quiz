@@ -2,9 +2,11 @@
 
 namespace Vhar\Quiz\Application\Commands\Quiz\UpdateQuiz;
 
+use Vhar\Quiz\Application\Exceptions\QuizTypeChangeBlockedException;
 use Vhar\Quiz\Application\Mappers\QuizViewMapper;
 use Vhar\Quiz\Application\Scopes\QuizEditScope;
 use Vhar\Quiz\Application\Views\QuizView;
+use Vhar\Quiz\Enums\QuizTypeEnum;
 use Vhar\Quiz\Models\Quiz;
 
 /**
@@ -28,6 +30,7 @@ final readonly class UpdateQuizHandler
      * @param UpdateQuizCommand $command Update quiz command.
      *
      * @return QuizView Updated quiz view.
+     * @throws QuizTypeChangeBlockedException If relation constraints prevent changing the type.
      */
     public function handle(
         UpdateQuizCommand $command,
@@ -43,6 +46,22 @@ final readonly class UpdateQuizHandler
         $quiz = $builder->findOrFail(
             $command->quizId,
         );
+
+        if ($quiz->quiz_type !== $command->quizType) {
+
+            $restrictions = config('quiz.type_restrictions', []);
+
+            $oldTypeValue = $quiz->quiz_type->value;
+
+            if (isset($restrictions[$oldTypeValue])) {
+                $relation = $restrictions[$oldTypeValue]['relation'];
+                $errorFactory = $restrictions[$oldTypeValue]['error_factory'];
+
+                if ($quiz->{$relation}()->exists()) {
+                    throw QuizTypeChangeBlockedException::{$errorFactory}();
+                }
+            }
+        }
 
         $quiz->title = $command->title;
         $quiz->description = $command->description;

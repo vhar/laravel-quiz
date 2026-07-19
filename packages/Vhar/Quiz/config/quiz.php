@@ -94,4 +94,27 @@ return [
         \Vhar\Quiz\Models\QuizQuestion::class => \Vhar\Quiz\Application\Policies\QuizQuestionEditPolicy::class,
         \Vhar\Quiz\Models\QuizDiagnosticKey::class => \Vhar\Quiz\Application\Policies\QuizDiagnosticKeyEditPolicy::class,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Quiz Type Restrictions
+    |--------------------------------------------------------------------------
+    |
+    | Mapping between quiz types and their specific database relations used
+    | to prevent data corruption during type mutation.
+    |
+    | If a quiz changes its type while these configured relations contain
+    | existing records, the operation is blocked to preserve integrity.
+    |
+    */
+    'type_restrictions' => [
+        \Vhar\Quiz\Enums\QuizTypeEnum::DIAGNOSTIC->value => [
+            'relation' => 'diagnosticKeys',
+            'error_factory' => 'dueToExistingDiagnosticKeys',
+        ],
+        \Vhar\Quiz\Enums\QuizTypeEnum::KNOWLEDGE->value => [
+            'relation' => 'resultLevels',
+            'error_factory' => 'dueToExistingResultLevels',
+        ],
+    ],
 ];
