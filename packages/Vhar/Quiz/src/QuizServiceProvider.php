@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Vhar\Quiz\Application\Exceptions\InvalidQuizTypeException;
 use Vhar\Quiz\Application\Policies\EditPolicyRegistry;
 
 class QuizServiceProvider extends ServiceProvider
@@ -75,5 +76,11 @@ class QuizServiceProvider extends ServiceProvider
                 ], Response::HTTP_NOT_FOUND);
             }
         );
+
+        $handler->renderable(function (InvalidQuizTypeException $exception) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY); // HTTP 422
+        });
     }
 }
